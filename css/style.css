@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Tiny5:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Silkscreen:wght@400;700&family=Tiny5:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+	display: flex;
+	flex-flow: row nowrap;
+	margin: 0;
+	padding: 0;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: black;
+	color: white;
+	height: 100vh;
+}
+
+header {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	border-right: 2px solid white;
+}
+
+h1 {
+	font-family: "Tiny5", sans-serif;
+	font-size: 69px;
+	writing-mode: vertical-rl;
+	transform: rotate(180deg);
+}
+
+#root {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+#calc {
+	display: flex;
+	flex-flow: column nowrap;
+	padding: 16px;
+	border: 2px solid white;
+	min-width: 280px;
+}
+
+#calc-screen {
+	display: flex;
+	width: 260px;
+	border: 2px solid white;
+	margin: 16px;
+}
+
+#calc-text {
+	width: 100%;
+	padding: 0 16px;
+	margin: 0;
+	text-align: right;
+	font-family: "Silkscreen", sans-serif;
+	font-size: 34px;
+}
+
+#calc-menu {
+	display: flex;
+	justify-content: flex-end;
+	flex-flow: row wrap;
+	max-width: 300px;
+}
+
+.btn {
+	font-family: "Tiny5", sans-serif;
+	font-size: 24px;
+	width: 25%;
+	flex: 0 0 21%;
+	border: 1px solid white;
+	background-color: black;
+	color: white;
+	margin: 2%;
+}
+
+.btn:hover {
+	background-color: white;
+	color: black;
+}
+
+.btn:active {
+	color: red;
+}
+
+.double {
+	flex-basis: 46%;
+}
