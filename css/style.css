@@ -57,6 +57,8 @@ h1 {
 	text-align: right;
 	font-family: "Silkscreen", sans-serif;
 	font-size: 34px;
+	height: 40px;
+	overflow: scroll;
 }
 
 #calc-menu {
