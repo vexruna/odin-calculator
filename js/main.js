@@ -14,44 +14,106 @@ const operate = (op) => {
 			ca = false;
 			buf1 = 0;
 			buf2 = 0;
+			opr = "";
 			break;
 		case 'remainder':
-			opr = op.id;
-			buf1 = ctext.textContent;
-			ca = false;
-			ctext.textContent = "0";
+			if (opr == op.id) {
+				buf1 = Number(buf1) % Number(buf2); 
+				buf2 = ctext.textContent;
+				ctext.textContent = Number(buf1) % Number(buf2);
+				ca = false;
+			} else if (opr != op.id) {
+				opr = op.id;
+				buf1 = ctext.textContent;
+				ca = false;
+				ctext.textContent = "0";
+			};
 			break;
 		case 'divide':
-			opr = op.id;
-			buf1 = ctext.textContent;
-			ca = false;
-			ctext.textContent = "0";
+			if (opr == op.id) {
+				buf1 = Number(buf1) / Number(buf2); 
+				buf2 = ctext.textContent;
+				ctext.textContent = Number(buf1) / Number(buf2);
+				ca = false;
+			} else if (opr != op.id) {
+				opr = op.id;
+				buf1 = ctext.textContent;
+				ca = false;
+				ctext.textContent = "0";
+			};
 			break;
 		case 'multiply':
-			opr = op.id;
-			buf1 = ctext.textContent;
-			ca = false;
-			ctext.textContent = "0";
+			if (opr == op.id) {
+				buf1 = Number(buf1) * Number(buf2); 
+				buf2 = ctext.textContent;
+				ctext.textContent = Number(buf1) * Number(buf2);
+				ca = false;
+			} else if (opr != op.id) {
+				opr = op.id;
+				buf1 = ctext.textContent;
+				ca = false;
+				ctext.textContent = "0";
+			};
 			break;
 		case 'minus':
-			opr = op.id;
-			buf1 = ctext.textContent;
-			ca = false;
-			ctext.textContent = "0";
+			if (opr == op.id) {
+				buf1 = Number(buf1) - Number(buf2); 
+				buf2 = ctext.textContent;
+				ctext.textContent = Number(buf1) - Number(buf2);
+				ca = false;
+			} else if (opr != op.id) {
+				opr = op.id;
+				buf1 = ctext.textContent;
+				ca = false;
+				ctext.textContent = "0";
+			};
 			break;
 		case 'plus':
-			opr = op.id;
-			buf1 = ctext.textContent;
-			ca = false;
-			ctext.textContent = "0";
+			if (opr == op.id && ca) {
+				buf1 = Number(buf1) + Number(buf2); 
+				buf2 = ctext.textContent;
+				ctext.textContent = Number(buf1) + Number(buf2);
+				ca = false;
+			} else if (opr != op.id) {
+				opr = op.id;
+				buf1 = ctext.textContent;
+				ca = false;
+				ctext.textContent = "0";
+			};
 			break;
 		case 'dot':
+			if (ctext.textContent.includes('.')) {
+				console.log("Has a dot");
+			} else if (!ctext.textContent.includes('.')) {
+				ctext.textContent += '.';
+			};
 			break;
 		case 'equals':
 			switch (opr){
+				case 'remainder':
+					buf2 = ctext.textContent;
+					ctext.textContent = Number(buf1) % Number(buf2);
+				ca = false;
+					break;
+				case 'divide':
+					buf2 = ctext.textContent;
+					ctext.textContent = Number(buf1) / Number(buf2);
+				ca = false;
+					break;
+				case 'multiply':
+					buf2 = ctext.textContent;
+					ctext.textContent = Number(buf1) * Number(buf2);
+				ca = false;
+					break;
+				case 'minus':
+					buf2 = ctext.textContent;
+					ctext.textContent = Number(buf1) - Number(buf2);
+				ca = false;
+					break;
 				case 'plus':
 					buf2 = ctext.textContent;
 					ctext.textContent = Number(buf1) + Number(buf2);
+				ca = false;
 					break;
 			}
 			break;
@@ -85,9 +147,10 @@ const operate = (op) => {
 };
 
 menu.addEventListener('click', (event) => {
+	let target = event.target;
+	if (target.getAttribute("class", "btn")) {
 	const btn_sfx = new Audio("sfx/key.mp3");
 	btn_sfx.play();
-
-	let target = event.target;
+	}
 	operate(target);
 })
