@@ -57,8 +57,9 @@ h1 {
 	text-align: right;
 	font-family: "Silkscreen", sans-serif;
 	font-size: 34px;
-	height: 40px;
+	height: 48px;
 	overflow: scroll;
+	user-select: none;
 }
 
 #calc-menu {
@@ -77,6 +78,8 @@ h1 {
 	background-color: black;
 	color: white;
 	margin: 2%;
+	cursor: pointer;
+	user-select: none;
 }
 
 .btn:hover {
@@ -86,6 +89,12 @@ h1 {
 
 .btn:active {
 	color: red;
+	border-left: 0;
+	border-top: 0;
+	border-right: 4px solid white;
+	border-bottom: 2px solid white;
+	background-color: black;
+	transform: translate(2px, 2px);
 }
 
 .double {
