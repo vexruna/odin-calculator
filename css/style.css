@@ -84,15 +84,13 @@ h1 {
 }
 
 .btn:hover {
-	background-color: white;
-	color: black;
+	color: red;
 }
 
 .btn:active {
-	color: red;
-	background-color: black;
-	border-bottom: 0;
-	border-top: 4px solid white;
+	color: black;
+	border: 0;
+	background-color: white;
 }
 
 .double {
