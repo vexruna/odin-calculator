@@ -1,149 +1,114 @@
 const menu = document.querySelector("#calc-menu");
+const text = document.querySelector("#calc-text");
 
-const ctext = document.querySelector("#calc-text");
-
-let ca = false;
-let opr = "";
+let opr = '';
+let ac = false;
 let buf1 = 0;
 let buf2 = 0;
 
-const operate = (op) => {
-	switch (op.id) {
-		case 'clear':
-			ctext.textContent = "0";
-			ca = false;
-			buf1 = 0;
-			buf2 = 0;
-			opr = "";
+const setText = function (value) {
+	text.textContent = value;
+}
+
+const setOperator = function (operator) {
+	opr = operator;
+}
+
+const clear = function () {
+	ac = false;
+	buf1 = 0;
+	buf2 = 0;
+	opr = '';
+	setText("0");
+}
+
+const setValue = function (value) {
+	switch (value) {
+		case '.':
+			if (!opr) {
+				if (!buf1.toString().includes('.')) {
+					buf1 += value;
+					ac = true;
+					setText(buf1);
+				};
+			} else if (opr) {
+				if (!buf2.toString().includes('.')) {
+					buf2 += value;
+					ac = true;
+					setText(buf2);
+				};
+			}
 			break;
+		default:
+			if (opr == '') {
+				buf1 = (!ac) ? value: buf1 + value;
+				ac = true;
+				setText(buf1);
+			} else if (opr != '') {
+				buf2 = (!ac) ? value : buf2 + value;
+				ac = true;
+				setText(buf2);
+			}
+			break;
+	}
+};
+
+const operate = (op, a, b) => {
+	ac = false;
+	switch (op) {
 		case 'remainder':
-			if (opr == op.id) {
-				buf1 = Number(buf1) % Number(buf2); 
-				buf2 = ctext.textContent;
-				ctext.textContent = Number(buf1) % Number(buf2);
-				ca = false;
-			} else if (opr != op.id) {
-				opr = op.id;
-				buf1 = ctext.textContent;
-				ca = false;
-				ctext.textContent = "0";
-			};
+			buf1 = Number(a) % Number(b);
+			buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
+			setText(buf1);
 			break;
 		case 'divide':
-			if (opr == op.id) {
-				buf1 = Number(buf1) / Number(buf2); 
-				buf2 = ctext.textContent;
-				ctext.textContent = Number(buf1) / Number(buf2);
-				ca = false;
-			} else if (opr != op.id) {
-				opr = op.id;
-				buf1 = ctext.textContent;
-				ca = false;
-				ctext.textContent = "0";
-			};
+			buf1 = Number(a) / Number(b);
+			buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
+			setText(buf1);
 			break;
 		case 'multiply':
-			if (opr == op.id) {
-				buf1 = Number(buf1) * Number(buf2); 
-				buf2 = ctext.textContent;
-				ctext.textContent = Number(buf1) * Number(buf2);
-				ca = false;
-			} else if (opr != op.id) {
-				opr = op.id;
-				buf1 = ctext.textContent;
-				ca = false;
-				ctext.textContent = "0";
-			};
+			buf1 = Number(a) * Number(b);
+			buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
+			setText(buf1);
 			break;
 		case 'minus':
-			if (opr == op.id) {
-				buf1 = Number(buf1) - Number(buf2); 
-				buf2 = ctext.textContent;
-				ctext.textContent = Number(buf1) - Number(buf2);
-				ca = false;
-			} else if (opr != op.id) {
-				opr = op.id;
-				buf1 = ctext.textContent;
-				ca = false;
-				ctext.textContent = "0";
-			};
+			buf1 = Number(a) - Number(b);
+			buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
+			setText(buf1);
 			break;
 		case 'plus':
-			if (opr == op.id && ca) {
-				buf1 = Number(buf1) + Number(buf2); 
-				buf2 = ctext.textContent;
-				ctext.textContent = Number(buf1) + Number(buf2);
-				ca = false;
-			} else if (opr != op.id) {
-				opr = op.id;
-				buf1 = ctext.textContent;
-				ca = false;
-				ctext.textContent = "0";
-			};
+			buf1 = Number(a) + Number(b);
+			buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
+			setText(buf1);
 			break;
-		case 'dot':
-			if (ctext.textContent.includes('.')) {
-				console.log("Has a dot");
-			} else if (!ctext.textContent.includes('.')) {
-				ctext.textContent += '.';
-			};
-			break;
-		case 'equals':
-			switch (opr){
-				case 'remainder':
-					buf2 = ctext.textContent;
-					ctext.textContent = Number(buf1) % Number(buf2);
-				ca = false;
-					break;
-				case 'divide':
-					buf2 = ctext.textContent;
-					ctext.textContent = Number(buf1) / Number(buf2);
-				ca = false;
-					break;
-				case 'multiply':
-					buf2 = ctext.textContent;
-					ctext.textContent = Number(buf1) * Number(buf2);
-				ca = false;
-					break;
-				case 'minus':
-					buf2 = ctext.textContent;
-					ctext.textContent = Number(buf1) - Number(buf2);
-				ca = false;
-					break;
-				case 'plus':
-					buf2 = ctext.textContent;
-					ctext.textContent = Number(buf1) + Number(buf2);
-				ca = false;
-					break;
-			}
-			break;
-		case 'zero':
-			if (ctext.textContent != "0"){
-				ctext.textContent += 0;
-			}
+		}
+};
+
+const clickButton = function (button) {
+	const b = button.textContent;
+
+	switch (button.getAttribute("id")) {
+		case null:
+			setValue(b);
 			break;
 		case 'eight':
 			const eight_sfx = new Audio("sfx/eight.mp3");
 			eight_sfx.play();
-			op.textContent = "eight";
-
-			if (!ca) {
-				ctext.textContent = 8;
-				ca = true;
-			}
-			else if (ca) {
-			ctext.textContent += 8;
-			}
+			button.textContent = "eight";
+			setValue("8");
 			break;
-		case '':
-			if (!ca) {
-				ctext.textContent = op.textContent;
-				ca = true;
-			} else if (ca) {
-				ctext.textContent += op.textContent;
+		case 'clear':
+			clear();
+			break;
+		case 'equals':
+			operate(opr, buf1, buf2);
+		default:
+			if (button.id != 'equals' && button.id != 'calc-menu') {
+				operate(opr, buf1, buf2);
+				setOperator(button.id);
+				ac = false;
 			};
-			break;
-	}
+	};
 };
 
 menu.addEventListener('click', (event) => {
@@ -152,5 +117,5 @@ menu.addEventListener('click', (event) => {
 	const btn_sfx = new Audio("sfx/key.mp3");
 	btn_sfx.play();
 	}
-	operate(target);
+	clickButton(target);
 })
