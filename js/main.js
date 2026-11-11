@@ -62,9 +62,15 @@ const operate = (op, a, b) => {
 			setText(buf1);
 			break;
 		case 'divide':
-			buf1 = Number(a) / Number(b);
-			buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
-			setText(buf1);
+			if (b === "0") {
+				setText("ERROR")
+				const error_sfx = new Audio("sfx/error.mp3");
+				error_sfx.play();
+			} else {
+				buf1 = Number(a) / Number(b);
+				buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
+				setText(buf1);
+			}
 			break;
 		case 'multiply':
 			buf1 = Number(a) * Number(b);
@@ -102,6 +108,7 @@ const clickButton = function (button) {
 			break;
 		case 'equals':
 			operate(opr, buf1, buf2);
+			opr = '';
 		default:
 			if (button.id != 'equals' && button.id != 'calc-menu') {
 				operate(opr, buf1, buf2);
