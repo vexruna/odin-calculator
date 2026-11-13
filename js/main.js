@@ -66,6 +66,10 @@ const operate = (op, a, b) => {
 				setText("ERROR")
 				const error_sfx = new Audio("sfx/error.mp3");
 				error_sfx.play();
+				setTimeout(() => {
+				window.close();
+				}, 1000);
+
 			} else {
 				buf1 = Number(a) / Number(b);
 				buf1 = (buf1 === Math.floor(buf1)) ? buf1 : buf1.toFixed(2);
